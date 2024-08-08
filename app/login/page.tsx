@@ -1,8 +1,12 @@
+import { auth } from "@/auth";
 import { login } from "../lib/actions";
+import { redirect } from "next/navigation";
 
 const inputClass = "border px-2 py-1 text-center rounded-md";
 
 const LoginPage = async () => {
+  // const session = await auth();
+  // if (session) redirect("/dashboard");
   return (
     <div className="h-full flex justify-center items-center">
       <form action={login} className="border-2 p-5 flex flex-col w-[400px]">
