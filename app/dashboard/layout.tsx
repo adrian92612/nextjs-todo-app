@@ -1,6 +1,7 @@
 import { LogoutButton } from "@/components/login/logout-button";
+import { auth } from "@/auth";
 
-const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
+const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
   return (
     <main className="flex h-full">
       <div className="px-5">
