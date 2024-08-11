@@ -1,5 +1,6 @@
 import { auth } from "@/auth";
 import { prisma } from "../lib/prisma";
+import { getUser } from "../lib/actions";
 
 const motivationalQuotes = [
   "Believe you can and you're halfway there.",
@@ -15,8 +16,7 @@ const motivationalQuotes = [
 ];
 
 const DashboardPage = async () => {
-  const session = await auth();
-  const user = session?.user;
+  const user = await getUser();
   const [projects, tasks] = await Promise.all([
     prisma.project.findMany({ where: { userId: user.id } }),
     prisma.task.findMany({ where: { userId: user.id } }),
