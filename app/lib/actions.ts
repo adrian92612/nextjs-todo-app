@@ -2,7 +2,7 @@
 
 import { auth, signIn, signOut } from "@/auth";
 import { prisma } from "./prisma";
-import { RiTaskLine } from "react-icons/ri";
+import { revalidatePath } from "next/cache";
 
 export const login = async (formData: FormData) => {
   const provider = formData.get("action") as string | null;
@@ -25,6 +25,11 @@ export const getProjects = async () => {
   const user = await getUser();
   const projects = await prisma.project.findMany({ where: { userId: user.id } });
   return projects;
+};
+export const getTasks = async () => {
+  const user = await getUser();
+  const tasks = await prisma.task.findMany({ where: { userId: user.id } });
+  return tasks;
 };
 
 export type ProjectFormState = {
@@ -109,5 +114,26 @@ export const createTask = async (previousState: TaskFormState, formData: FormDat
     };
   } catch (error) {
     return { ...task, message: "Failed to create task. Please try again." };
+  }
+};
+
+export const updateTaskCompleted = async (taskId: number, isCompleted: boolean) => {
+  try {
+    await prisma.task.update({
+      where: { id: taskId },
+      data: { completed: isCompleted },
+    });
+    revalidatePath("/dashboard/tasks");
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const deleteTask = async (taskId: number) => {
+  try {
+    await prisma.task.delete({ where: { id: taskId } });
+    revalidatePath("/dashboard/tasks");
+  } catch (error) {
+    console.log(error);
   }
 };
