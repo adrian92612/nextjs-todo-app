@@ -15,7 +15,6 @@ export const CreateProjectForm = ({ userId }: CreateProjectFormProp) => {
     message: "",
   });
 
-  console.log("FORM STATE", state);
   return (
     <form action={action} className="w-[400px] flex flex-col">
       <input type="hidden" name="userID" value={userId} />

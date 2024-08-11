@@ -5,7 +5,7 @@ const CreateProjectPage = async () => {
   const user = await getUser();
   return (
     <div>
-      Create A Project
+      <h1>Create a Project</h1>
       <CreateProjectForm userId={user.id} />
     </div>
   );
